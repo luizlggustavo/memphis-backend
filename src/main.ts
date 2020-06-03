@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Projeto Memphis / API')
     .setDescription('Desenvolvido por luizlggustavo@hotmail.com')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);

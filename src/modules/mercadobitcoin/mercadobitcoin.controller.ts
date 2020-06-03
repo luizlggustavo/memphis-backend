@@ -1,41 +1,43 @@
-import { Controller, Post, Body, Get, Param, Put, Delete, Head } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { MercadoBitcoinService } from './mercadobitcoin.service';
-import { ApiOperation, ApiTags, ApiParam, ApiBody, ApiHeaders } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { ApiDados } from '../../models/api-dados.model';
-// import { Proprietario } from '../schemas/proprietario.dto';
-
-@ApiTags('Mercado Bitcoin')
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+@ApiBearerAuth()
 @Controller('api')
+@ApiTags('Mercado Bitcoin')
 export class MercadoBitcoinController {
 
-    constructor
-        (private mercadoBitcoinService: MercadoBitcoinService,
+    constructor(
+        private mercadoBitcoinService: MercadoBitcoinService,
     ) { }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/dados')
     @ApiBody(
         {
-            type: ApiDados
-        }
+            type: ApiDados,
+        },
     )
     @ApiOperation({ summary: 'Consulta na API de Dados do Mercado Bitcoin' })
     async consultaApiDados(
-        @Body() apiDados: ApiDados
+        @Body() apiDados: ApiDados,
     ) {
-        return this.mercadoBitcoinService.callApiDadosMercadoBitcoin(apiDados)
+        return this.mercadoBitcoinService.callApiDadosMercadoBitcoin(apiDados);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('/negociacoes')
     @ApiBody(
         {
-            type: ApiDados
-        }
+            type: ApiDados,
+        },
     )
     @ApiOperation({ summary: 'Consulta na API de Negociações do Mercado Bitcoin' })
     async consultaApiNegociacoes(
-        @Body() apiDados: ApiDados
+        @Body() apiDados: ApiDados,
     ) {
-        return this.mercadoBitcoinService.genericao(apiDados.metodo, true)
+        return this.mercadoBitcoinService.genericao(apiDados.metodo, true);
     }
 
 }

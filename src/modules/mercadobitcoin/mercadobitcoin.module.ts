@@ -11,10 +11,10 @@ import { MercadoBitcoinProviders } from './mercadobitcoin.providers';
   ],
   providers: [
     MercadoBitcoinService,
-    ...MercadoBitcoinProviders
+    ...MercadoBitcoinProviders,
   ],
   controllers: [
-    MercadoBitcoinController
-  ]
+    MercadoBitcoinController,
+  ],
 })
 export class MercadoBitcoinModule { }
